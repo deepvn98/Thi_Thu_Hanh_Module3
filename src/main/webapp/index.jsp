@@ -11,6 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
+  <a href="/Product">show all</a>
   $END$
   </body>
 </html>

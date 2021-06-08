@@ -58,18 +58,19 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> showAll() {
         List<Product> productList = new ArrayList<>();
-        String sql ="select p.id,p.name_product,p.price,p.quantity,p.color,c.name from product p join category c on c.id = p.id_category;";
+        String sql ="select d.id,d.name_product,d.price,d.quantity,d.color,c.name from product d join productcategory p on d.id = p.id_product\n" +
+                "join category c on c.id = p.id_category";
+
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+           PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                int id = resultSet.getInt("p.id");
-                String name = resultSet.getString("p.name_product");
-                double price = resultSet.getDouble("p.price");
-               int quanlity = resultSet.getInt("p.quantity");
-               String color = resultSet.getString("p.color");
-               String describes = resultSet.getString("p.describes");
-               Product product = new Product(id,name,price,quanlity,color,describes);
+                int id = resultSet.getInt("d.id");
+                String name = resultSet.getString("d.name_product");
+                double price = resultSet.getDouble("d.price");
+                int quanlity = resultSet.getInt("d.quantity");
+                String color = resultSet.getString("d.color");
+                Product product = new Product(id,name,price,quanlity,color);
                 List<Category> categories = categoryService.findListById(id);
                 product.setCategorys(categories);
                 productList.add(product);

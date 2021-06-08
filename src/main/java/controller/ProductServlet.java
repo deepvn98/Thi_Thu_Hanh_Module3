@@ -1,5 +1,6 @@
 package controller;
 
+import model.Category;
 import model.Product;
 import service.IProductService;
 import service.ProductService;
@@ -42,10 +43,17 @@ public class ProductServlet extends HttpServlet {
 
 
     private void showAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = "student/list.jsp";
+        String path = "showlist.jsp";
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(path);
-        List<Product> students = productService.showAll();
-        request.setAttribute("students",students);
+        List<Product> product = productService.showAll();
+        request.setAttribute("product",product);
+        requestDispatcher.forward(request,response);
+    }
+    private void createForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = "create.jsp";
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(path);
+        List<Category> categories =categoryService.showAll();
+        request.setAttribute("category",categories);
         requestDispatcher.forward(request, response);
     }
 
