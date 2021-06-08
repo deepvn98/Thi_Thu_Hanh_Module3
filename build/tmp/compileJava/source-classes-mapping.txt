@@ -1,18 +1,18 @@
-service/IProductService.java
- service.IProductService
+service/category/CategoryService.java
+ service.category.CategoryService
 service/category/ICategory.java
  service.category.ICategory
-service/ProductService.java
- service.ProductService
+connection/ConnectionJDBC.java
+ connection.ConnectionJDBC
 model/Category.java
  model.Category
 service/IService.java
  service.IService
+service/IProductService.java
+ service.IProductService
 model/Product.java
  model.Product
-connection/ConnectionJDBC.java
- connection.ConnectionJDBC
-service/category/CategoryService.java
- service.category.CategoryService
 controller/ProductServlet.java
  controller.ProductServlet
+service/ProductService.java
+ service.ProductService

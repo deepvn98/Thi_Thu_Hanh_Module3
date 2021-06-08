@@ -22,7 +22,7 @@ public class ProductService implements IProductService {
         int idProduct = 0;
         String sql = "insert into product(name_product, price, quantity, color, describes) value (?,?,?,?,?)";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,product.getName());
             preparedStatement.setDouble(2,product.getPrice());
             preparedStatement.setInt(3,product.getQuantity());
@@ -52,7 +52,39 @@ public class ProductService implements IProductService {
 
     @Override
     public void update(int id, Product product, int[] category) {
+            String sql ="update product set name_product= ?, price = ?,quantity = ? , color= ?,describes =?  where id =?";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1,product.getName());
+                preparedStatement.setDouble(2,product.getPrice());
+                preparedStatement.setInt(3,product.getQuantity());
+                preparedStatement.setString(4,product.getColor());
+                preparedStatement.setString(5,product.getDescribes());
+                preparedStatement.setInt(6,id);
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            String sql2 =  "delete from productcategory where  id_product= ?";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql2);
+                preparedStatement.setInt(1,id);
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
+            String sql1 = "insert into productcategory(id_product,id_category) value (?,?)";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql1);
+                for (int i = 0; i< category.length; i++ ){
+                    preparedStatement.setInt(2,category[i]);
+                    preparedStatement.setInt(1,id);
+                    preparedStatement.executeUpdate();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
     }
 
     @Override
@@ -95,12 +127,54 @@ public class ProductService implements IProductService {
 
     @Override
     public void remove(int id) {
+        String sql1 = "delete from productcategory where id_product =?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        String sql = "delete from product where id =?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+
+        }
 
     }
 
     @Override
     public Product findById(int id) {
-        return null;
+        Product product = null;
+        String sql ="select * from product where id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            ResultSet set = preparedStatement.executeQuery();
+            while (set.next()){
+                int id1 = set.getInt("id");
+                String name = set.getString("name_product");
+                double price = set.getDouble("price");
+                int qualyti= set.getInt("quantity");
+                String color = set.getString("color");
+                String describes = set.getString("describes");
+                product = new Product(id,name,price,qualyti,color,describes);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+
+        }
+        return product;
+
     }
 
     @Override

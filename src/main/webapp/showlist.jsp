@@ -14,7 +14,7 @@
     <title>Danh sachs sanr phaamr</title>
 </head>
 <body>
-<h2><a href="">Link Thêm mới</a></h2>
+<h2><a href="/Product?action=create">Link Thêm mới</a></h2>
 <br><br>
 <h2 style="color: mediumblue">Danh sach sanr pham</h2>
 <table border="1 solid" width="50%">

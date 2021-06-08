@@ -20,12 +20,27 @@ public class Product {
         this.describes = describes;
     }
 
+    public Product(String name, double price, int quantity, String color) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.color = color;
+    }
+
     public Product(int id, String name, double price, int quantity, String color) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.color = color;
+    }
+
+    public Product(String name, double price, int quantity, String color, String describes) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.color = color;
+        this.describes = describes;
     }
 
     public Product(int id, double price, int quantity, String color, String describes, List<Category> categorys) {
